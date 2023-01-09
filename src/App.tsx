@@ -1,15 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import '@fontsource/sawarabi-gothic/400.css'
+
+import React from "react";
+import "./App.css";
+import { ChakraProvider } from "@chakra-ui/react";
+
+import Theme from "./theme/theme";
+import { BrowserRouter } from "react-router-dom";
+import { Router } from "./router/Router";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>Hello React app with AWS</h2>
-      </header>
-    </div>
+    <ChakraProvider theme={Theme}>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </ChakraProvider>
   );
 }
 
