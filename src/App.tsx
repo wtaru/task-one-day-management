@@ -1,4 +1,3 @@
-import '@fontsource/sawarabi-gothic/400.css'
 
 import React from "react";
 import "./App.css";
