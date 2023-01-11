@@ -1,64 +1,78 @@
-import { Box, Container, Heading, Image, Text } from "@chakra-ui/react";
-import React, { FC, memo } from "react";
+import {
+  Box,
+  Container,
+  Heading,
+  Image,
+  Text,
+  AspectRatio,
+} from "@chakra-ui/react";
+import React, { FC, memo, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "@fontsource/sawarabi-gothic/400.css";
 
-const TopImage = require("../../images/top/top.png");
+const TopImage = require("../../images/top/cute-bunny-gif-6-min.gif");
 
 export const Top: FC = memo(() => {
   const navigate = useNavigate();
+  const [value, setValue] = useState("");
 
-  const onClickGoHome = () => {
-    navigate("/home");
-  };
-
+  const onClickGoHome = useCallback(() => navigate("/home"),[navigate]);
   return (
-    <Container maxW="md" bg="teal.400" h="100vh">
-      <Box p={4} mb={1}>
-        <Heading
-          fontSize="4xl"
-          color="white"
-          textShadow="1px 2px #808080"
-          textAlign="center"
-        >
-          Let's Todo today
-        </Heading>
+    <Container maxW="md" bg="teal.400" h="100vh" m="auto">
+      <Heading
+        fontSize="4xl"
+        color="white"
+        textShadow="1px 2px #808080"
+        textAlign="center"
+        p={4}
+        m={1}
+      >
+        Let's Todo today
+      </Heading>
+      <Box
+        as="div"
+        w="260px"
+        onClick={onClickGoHome}
+        bg="white"
+        p={4}
+        shadow="0 6px 1px 2px #333631"
+        borderRadius="full"
+        _hover={{ cursor: "pointer" }}
+        m="auto"
+      >
+        <Image
+          src={TopImage}
+          alt="干支画像"
+          display="block"
+          m="auto"
+          borderRadius="full"
+        />
       </Box>
-        <Box
-          as="div"
-          onClick={onClickGoHome}
-          bg="white"
-          w="100%"
-          p={4}
-          shadow="2xl"
-          borderRadius="3xl"
-          _hover={{ cursor: "pointer" }}
+      <Box bg="teal.300" p={4} my={10} mx="auto" borderRadius={10} w="310px" shadow="sm">
+        <Text
+          textAlign="center"
+          color="yellow.200"
+          fontSize="22px"
+          fontWeight="bold"
         >
-          <Image
-            src={TopImage}
-            alt="干支画像"
-            boxSize={200}
-            w="260px"
-            display="block"
-            m="auto"
-          />
-        </Box>
-        <Box bg="teal.300" p={4} my={10} borderRadius={20} shadow="md">
-          <Text textAlign="center" color="yellow.300" fontSize="22px" fontWeight="bold">
-            失敗してもいいじゃない。<br/>
-            それでも何とかなるものよ。<br/>
+          失敗してもいいじゃない
+          <br />
+          何とかなるものよ
+          <br />
+        </Text>
+        <Text fontSize="16px" my="1" color="gray.100" textAlign="left">
+          ~ It's okay to fail. Still manageable. ~
+        </Text>
+        <Box mt={7} py={2}>
+          <Text fontSize="16px" color="gray.200" textAlign="left">
+            When you open the app, today's
+            You can store your Todo.
+            <br />
+            今やる気が出なくても心配しない！
+            <br />
           </Text>
-          <Text fontSize="16px" my="1" color="gray.100" textAlign="center"> 
-            ~ It's okay to fail. Still manageable. ~
-          </Text>
-          <Box mt={10}>
-            <Text fontSize="16px" color="gray.200" textAlign="left" mb={2}> 
-              このアプリを開くと今日、思い出した<br/>Todoを保管する事ができます。<br/>
-              今やる気が出なくても心配しない！<br/>
-            </Text>
-          </Box>
         </Box>
-      
+      </Box>
     </Container>
   );
 });
