@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Input, Stack, Text } from "@chakra-ui/react";
 import React, { ChangeEvent, FC, memo, useCallback, useState } from "react";
 import { Timer } from "../molecule/time/Timer";
+import { Complate } from "../origin/Complate";
 import { UnComplate } from "../origin/UnComplate";
 
 export const Home: FC = memo(() => {
@@ -25,7 +26,7 @@ export const Home: FC = memo(() => {
     newUnComplateTodos.splice(i, 1);
     setUnComplateTodos(newUnComplateTodos);  
 
-    const newComplateTodos = [...complateTodos, newUnComplateTodos[i]];
+    const newComplateTodos = [...complateTodos, unComplateTodos[i]];
     setComplateTodos(newComplateTodos);
   }
 
@@ -33,6 +34,16 @@ export const Home: FC = memo(() => {
   const onClickDelete = (i: number) => {
     const newUnComplateTodos = [...unComplateTodos];
     newUnComplateTodos.splice(i, 1);
+    setUnComplateTodos(newUnComplateTodos);
+  }
+
+  // back
+  const onClickBack = (i:number) => {
+    const newComplateTodos = [...complateTodos];
+    newComplateTodos.splice(i, 1);
+    setComplateTodos(newComplateTodos);
+
+    const newUnComplateTodos = [...unComplateTodos, complateTodos[i]];
     setUnComplateTodos(newUnComplateTodos);
   }
 
@@ -60,10 +71,8 @@ export const Home: FC = memo(() => {
         </Box> 
         <Box>
           <Text fontWeight="bold" mb={1} color="teal.600">終わったもの</Text>
-          <Box bg="#fff" h="37vh" borderRadius={10} shadow="outline"
-          ></Box>
+          <Complate ComplateTodos={complateTodos} onClickBack={onClickBack}/>
         </Box>
-        
       </Stack>
     </Box>
   );
