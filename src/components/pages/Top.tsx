@@ -6,7 +6,7 @@ import {
   Text,
   AspectRatio,
 } from "@chakra-ui/react";
-import React, { FC, memo, useCallback, useState } from "react";
+import React, { FC, memo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "@fontsource/sawarabi-gothic/400.css";
 
@@ -14,9 +14,9 @@ const TopImage = require("../../images/top/cute-bunny-gif-6-min.gif");
 
 export const Top: FC = memo(() => {
   const navigate = useNavigate();
-  const [value, setValue] = useState("");
 
   const onClickGoHome = useCallback(() => navigate("/home"),[navigate]);
+
   return (
     <Container maxW="md" bg="teal.400" h="100vh" m="auto">
       <Heading
@@ -25,7 +25,7 @@ export const Top: FC = memo(() => {
         textShadow="1px 2px #808080"
         textAlign="center"
         p={4}
-        m={1}
+        mb={1}
       >
         Let's Todo today
       </Heading>
