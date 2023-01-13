@@ -9,6 +9,7 @@ export const Home: FC = memo(() => {
   const [value, setValue] = useState("");
   const [unComplateTodos, setUnComplateTodos] = useState<string[]>([]);
   const [complateTodos, setComplateTodos] = useState<string[]>([]);
+  const [cheak, setCheak] = useState<boolean[]>([]);
 
   // text
   const onChageValue = (e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
@@ -18,14 +19,20 @@ export const Home: FC = memo(() => {
     if (value === "") return;
     const newTodos = [...unComplateTodos, value];
     setUnComplateTodos(newTodos);
+    const newCheak = newTodos.map(t => false);
+    setCheak(newCheak);
     setValue("");
   }
 
   // complate
   const onClickComplete = (i: number) => {
     const newUnComplateTodos = [...unComplateTodos];
+    const newCheak = [...cheak];
     newUnComplateTodos.splice(i, 1);
+    newCheak.splice(i, 1);
+
     setUnComplateTodos(newUnComplateTodos);  
+    setCheak(newCheak);
 
     const newComplateTodos = [...complateTodos, unComplateTodos[i]];
     setComplateTodos(newComplateTodos);
@@ -34,8 +41,12 @@ export const Home: FC = memo(() => {
   // complate delete
   const onClickDelete = (i: number) => {
     const newUnComplateTodos = [...unComplateTodos];
+    const newCheak = [...cheak];
     newUnComplateTodos.splice(i, 1);
+    newCheak.splice(i, 1);
+
     setUnComplateTodos(newUnComplateTodos);
+    setCheak(newCheak);
   }
 
   // back
@@ -47,9 +58,16 @@ export const Home: FC = memo(() => {
     const newUnComplateTodos = [...unComplateTodos, complateTodos[i]];
     setUnComplateTodos(newUnComplateTodos);
   }
-  const newComplateTodos = complateTodos;
-  const newUnComplateTodos = unComplateTodos;
 
+  // cheak
+  const onClickCheak = (i: number) => {
+    const newcheak = [...cheak];
+    const changeCheak = (cheak[i]) ? false : true;
+    newcheak.splice(i, 1, changeCheak);
+    setCheak(newcheak);
+  }
+
+  const newUnComplateTodos = unComplateTodos;
 
   return (
     <Box h="100vh" w="100%" pt={2}>
@@ -60,13 +78,13 @@ export const Home: FC = memo(() => {
             <Timer/>
           </Flex>
           {(newUnComplateTodos.length !== 0) ? (
-            <UnComplate unComplateTodos={unComplateTodos} onClickComplete={onClickComplete} onClickDelete={onClickDelete} />
+            <UnComplate cheak={cheak} onClickCheak={onClickCheak} unComplateTodos={unComplateTodos} onClickComplete={onClickComplete} onClickDelete={onClickDelete} />
           ) : (
             <TasksUndefined/>
           )}
         </Box> 
         <Box>
-          <Text fontWeight="bold" mb={1} color="teal.600">終わったもの</Text>
+          <Text fontWeight="bold" mb={1} color="teal.600">終わったタスク</Text>
           <Complate ComplateTodos={complateTodos} onClickBack={onClickBack}/>
         </Box>
       </Stack>
