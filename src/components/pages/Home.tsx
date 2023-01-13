@@ -1,8 +1,9 @@
 import { Box, Button, Flex, Input, Stack, Text } from "@chakra-ui/react";
-import React, { ChangeEvent, FC, memo, useCallback, useState } from "react";
+import React, { ChangeEvent, FC, memo, useState } from "react";
 import { Timer } from "../molecule/time/Timer";
 import { Complate } from "../origin/Complate";
 import { UnComplate } from "../origin/UnComplate";
+import { TasksUndefined } from "../origin/TasksUndefined";
 
 export const Home: FC = memo(() => {
   const [value, setValue] = useState("");
@@ -46,10 +47,30 @@ export const Home: FC = memo(() => {
     const newUnComplateTodos = [...unComplateTodos, complateTodos[i]];
     setUnComplateTodos(newUnComplateTodos);
   }
+  const newComplateTodos = complateTodos;
+  const newUnComplateTodos = unComplateTodos;
+
 
   return (
-    <Box h="100vh" w="100%">
-      <Flex p={3}>
+    <Box h="100vh" w="100%" pt={2}>
+      <Stack p={3} spacing={5}>
+        <Box>
+          <Flex justify="space-between" position="relative">
+            <Text fontWeight="bold" mb={1} color="teal.400">残りを頑張ろう</Text>
+            <Timer/>
+          </Flex>
+          {(newUnComplateTodos.length !== 0) ? (
+            <UnComplate unComplateTodos={unComplateTodos} onClickComplete={onClickComplete} onClickDelete={onClickDelete} />
+          ) : (
+            <TasksUndefined/>
+          )}
+        </Box> 
+        <Box>
+          <Text fontWeight="bold" mb={1} color="teal.600">終わったもの</Text>
+          <Complate ComplateTodos={complateTodos} onClickBack={onClickBack}/>
+        </Box>
+      </Stack>
+      <Flex py={2} px={3}>
         <Input bg="white" placeholder="ここにタスクを入力" onChange={onChageValue} value={value}/>
         <Button
           bg="teal.400"
@@ -61,19 +82,6 @@ export const Home: FC = memo(() => {
           追加
         </Button>
       </Flex>
-      <Stack p={3} spacing={5}>
-        <Box>
-          <Flex justify="space-between" position="relative">
-            <Text fontWeight="bold" mb={1} color="teal.400">残りを頑張ろう</Text>
-            <Timer/>
-          </Flex>
-          <UnComplate unComplateTodos={unComplateTodos} onClickComplete={onClickComplete} onClickDelete={onClickDelete} />
-        </Box> 
-        <Box>
-          <Text fontWeight="bold" mb={1} color="teal.600">終わったもの</Text>
-          <Complate ComplateTodos={complateTodos} onClickBack={onClickBack}/>
-        </Box>
-      </Stack>
     </Box>
   );
 });

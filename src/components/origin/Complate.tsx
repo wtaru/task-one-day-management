@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button,  ListItem, Text, UnorderedList } from "@chakra-ui/react";
 import React, { memo } from "react";
 
 type Props = {
@@ -9,15 +9,26 @@ type Props = {
 export const Complate = memo((props: Props) => {
     const { ComplateTodos, onClickBack} = props;
     return (
-        <Box bg="#fff" h="37vh" borderRadius={10} shadow="outline" pt={2} pl={8}>
-            <ul>
-                {ComplateTodos.map((todo, i) => (
-                    <Flex key={todo} justify="space-between">
-                        <li>{todo}</li>
-                        <Button bg="gray.400" color="white" mx={1} boxSize={7} fontSize="xs" onClick={() => onClickBack(i)}>削除</Button>    
-                    </Flex>
-                ))}
-            </ul>
+        <Box bg="#fff" h="37vh" borderRadius={10} shadow="outline" pl={1}>
+            <UnorderedList ml={1} py={2}>
+            {ComplateTodos.map((todo, i) => (
+                <ListItem w="100%" display="flex" >
+                    <Text w="100%" my={0.5}>●  {todo}</Text>
+                    <Box w="100%" display="flex" justifyContent="right" alignItems="center" mr={1} my={0.5}>
+                        <Button
+                        borderRadius="full"
+                        bg="gray.400"
+                        color="white"
+                        boxSize={6}
+                        fontSize="xs"
+                        onClick={() => onClickBack(i)}
+                        >
+                        戻す
+                        </Button>
+                    </Box>
+                </ListItem>
+            ))}
+        </UnorderedList>
         </Box>
     );
 });
